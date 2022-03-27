@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="style/style.css" text="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.css" integrity="sha512-Woz+DqWYJ51bpVk5Fv0yES/edIMXjj3Ynda+KWTIkGoynAMHrqTcDUQltbipuiaD5ymEo9520lyoVOo9jCQOCA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <!-- Add the slick-theme.css if you want default styling -->
+        <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+        <!-- Add the slick-theme.css if you want default styling -->
+        <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+    </head>
+    <div id="ambient" style="overflow:hidden; position:absolute; width:100%; height:100vh;"></div>
+    <img src="" alt="" id="bgImage">
+    <div id="loading">
+        <div class="bouncing-loader">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <body>
+        <sidebar></sidebar>
+        <settingsmenu></settingsmenu>
+        <main>
+        <div class="load">
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-5">
+                        <weather></weather>
+                    </div>
+                    <div class="col-sm-7">
+                        <name-and-clock>Name-and-Clock</name-and-clock>
+                    </div>
+
+                    <div class="col-md-12">
+                        <bookmarks></bookmarks>
+                    </div>
+
+                    <div class="col-md-7">
+                        <Spotify></Spotify>
+                        
+                    </div>
+                    
+                    <div class="col-md-5">
+                        <todo-list></todo-list>
+                        <Bank-Holiday></Bank-Holiday>
+                    </div>
+                    
+                    
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4"></div>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    
+                </div>
+            </div>
+        </div>
+        </div>
+        </main>
+        <script src="https://sdk.scdn.co/spotify-player.js"></script>
+        <script>
+            getDevice()
+            function getDevice(){
+                window.onSpotifyWebPlaybackSDKReady = () => {
+                                    const token = window.spotToken;
+                                    if(token == null){
+                                        return
+                                    }
+                                    const player = new Spotify.Player({
+                                        name: 'Web Player',
+                                        getOAuthToken: cb => { cb(token); },
+                                        volume: 0.5,
+                                        connectOnInitialized: true
+                                    });
+                                    // Ready
+                                    player.addListener('ready', ({ device_id }) => {
+                                        console.log('Ready with Device ID', device_id);
+                                        window.SpotDevice = device_id;
+                                    });
+                        
+                                    // Not Ready
+                                    player.addListener('not_ready', ({ device_id }) => {
+                                        console.log('Device ID has gone offline', device_id);
+                                        window.SpotDevice = device_id;
+                                    });
+                        
+                                    player.addListener('initialization_error', ({ message }) => {
+                                        console.error(message);
+                                    });
+                        
+                                    player.addListener('authentication_error', ({ message }) => {
+                                        console.error(message);
+                                    });
+                        
+                                    player.addListener('account_error', ({ message }) => {
+                                        console.error(message);
+                                    });
+                        
+                                    player.connect();
+                                    
+                                }
+
+                                if(device_id == null)
+                                getDevice()
+            }
+            
+        </script>
+        
+        <script src="https://kit.fontawesome.com/c4bce42dd5.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.3/dragula.min.js" referrerpolicy="no-referrer"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/scrollReveal.js/4.0.9/scrollreveal.min.js" referrerpolicy="no-referrer"></script>
+        <script
+  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+  crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js" integrity="sha512-k2GFCTbp9rQU412BStrcD/rlwv1PYec9SNrkbQlo6RZCf75l6KcC3UwDY8H5n5hl4v77IDtIPwOk9Dqjs/mMBQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+  
+        <script src="js/animeBG.js"></script>
+        <script src="js/script.js" async defer></script>
+        <script src="js/components.js"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        </script>
+        
+    </body>
+</html>
+
