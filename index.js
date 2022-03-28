@@ -47,7 +47,7 @@ const spotify = require('./spotify/spotify.js')
     var client_id = '579419be803d4ccaa786734dae89c2d7'; // Your client id
     var client_secret = '4824aa0c25554de5abaae63d87421b8e'; // Your secret
     //var redirect_uri = 'http://localhost:5000/spotify/callback'; // Your redirect uri
-    var redirect_uri = port 
+    var redirect_uri = port + '/spotify/callback'
     
  /**
   * Generates a random string containing numbers and letters
